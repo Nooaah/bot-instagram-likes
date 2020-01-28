@@ -1,0 +1,17 @@
+{
+  "name": "screenschedule",
+  "version": "1.0.0",
+  "description": "Schedule screen of IUT Littoral Côte d'Opale Calais Informatique",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Noah Chatelain",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "puppeteer": "^2.1.0"
+  }
+}
