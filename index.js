@@ -1,7 +1,8 @@
 const puppeteer = require('puppeteer')
+obj = require('./mdp.js')
 
 const SECRET_EMAIL = 'noah.chtl'
-const SECRET_PASSWORD = 'teamcauet'
+const SECRET_PASSWORD = obj.getMdp()
 const TAG = 'nodejs'
 const NB_LIKES = 300
 
@@ -17,7 +18,7 @@ const main = async () => {
     await page.type('input[name="username"]', SECRET_EMAIL)
     await page.type('input[name="password"]', SECRET_PASSWORD)
     await page.click('button[type="submit"]')
-    await page.waitFor(4000);
+    await page.waitFor(8000);
     await page.click('div[role="dialog"] > div > div:nth-child(3) > button:nth-child(2)')
 
     await page.waitFor(2500);
