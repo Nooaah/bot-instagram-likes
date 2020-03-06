@@ -1,5 +1,5 @@
 function getMdp() {
-    return 'teamcauet'
+    return 'YOURPASSWORD'
 }
 
 module.exports.getMdp = getMdp;

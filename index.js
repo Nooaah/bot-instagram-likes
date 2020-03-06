@@ -1,24 +1,41 @@
 const puppeteer = require('puppeteer')
-obj = require('./mdp.js')
+obj = require('./mdp.js') //Use the file mdpInsta.js
 
 const SECRET_EMAIL = 'noah.chtl'
 const SECRET_PASSWORD = obj.getMdp()
-const TAG = 'nodejs'
+const TAG = 'disney'
 const NB_LIKES = 300
 
 const main = async () => {
     const browser = await puppeteer.launch({
         headless: false,
+        args: ['--lang=en-GB,en']
     })
     const page = await browser.newPage()
+    await page.setExtraHTTPHeaders({
+        'Accept-Language': 'en'
+    });
     await page.goto('https://www.instagram.com/accounts/login/', {
         waitUntil: 'networkidle2'
     })
+    // Set the language forcefully on javascript
+    await page.evaluateOnNewDocument(() => {
+        Object.defineProperty(navigator, "language", {
+            get: function () {
+                return ["en-GB"];
+            }
+        });
+        Object.defineProperty(navigator, "languages", {
+            get: function () {
+                return ["en-GB", "en"];
+            }
+        });
+    });
     await page.waitForSelector('form')
     await page.type('input[name="username"]', SECRET_EMAIL)
     await page.type('input[name="password"]', SECRET_PASSWORD)
     await page.click('button[type="submit"]')
-    await page.waitFor(8000);
+    await page.waitFor(3000);
     await page.click('div[role="dialog"] > div > div:nth-child(3) > button:nth-child(2)')
 
     await page.waitFor(2500);
@@ -37,15 +54,18 @@ const main = async () => {
     }
 
     await page.click('div[role="button"][tabindex="0"] > div > span:nth-child(2)')
-    await page.type('input[placeholder="Search"]', TAG)
+    //await page.type('input[placeholder="Search"]', TAG)
 
     const page2 = await browser.newPage()
+    await page2.setExtraHTTPHeaders({
+        'Accept-Language': 'en'
+    });
     await page2.goto('https://www.instagram.com/explore/tags/' + TAG, {
         waitUntil: 'networkidle2'
     })
 
     await page2.click('img[decoding="auto"]')
-    
+
     var likeGive = 0;
     for (i = 1; i < NB_LIKES; i++) {
         wait(1000);
@@ -53,8 +73,7 @@ const main = async () => {
             await page2.click('svg[aria-label="Like"][width="24"]:nth-child(' + 1 + ')')
             likeGive++;
             console.log('Nombre de Likes donnés :' + likeGive);
-        } catch (error) {
-        }
+        } catch (error) {}
         await page2.click('.coreSpriteRightPaginationArrow')
         wait(500);
     }
