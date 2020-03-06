@@ -1,9 +1,9 @@
 const puppeteer = require('puppeteer')
-obj = require('./mdp.js') //Use the file mdpInsta.js
+obj = require('./mdpInsta.js')
 
 const SECRET_EMAIL = 'noah.chtl'
 const SECRET_PASSWORD = obj.getMdp()
-const TAG = 'disney'
+const TAG = 'nodejs'
 const NB_LIKES = 300
 
 const main = async () => {
